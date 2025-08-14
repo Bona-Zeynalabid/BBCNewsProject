@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+    <title>BBC</title>
+    <style>
+      .cont{
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        justify-content: center;
+      }
+      .cont div{
+        display: inline-block;
+        margin: 10px;
+
+      }
+      footer{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        color: white;
+      }
+      span{
+        color: white;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+  <div class="container-fluid bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="https://ichef.bbci.co.uk/images/ic/400x225/p0f2ssyx.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+      <span>BBC</span>
+    </a>
+  </div>
+</nav>
+<div class="cont" id="cont">
+  
+</div>
+<footer>&copy; 2025 BBC</footer>
+    <script>
+      var cont=document.getElementById('cont');
+        fetch("https://api.first.org/data/v1/news").then(response=>{
+            return response.json();
+        }).then(data=>{
+            for(let i=0; i<data.data.length;i++){
+              if(data.data[i].image==undefined||data.data[i].summary==null)
+            {
+              continue;
+            }
+            else
+            var code=`
+    <div class="card my-8" style="width: 18rem;">
+  <img src="${data.data[i].image}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${data.data[i].title}</h5>
+    <p class="card-text">${data.data[i].summary.slice(0, 70)}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+  `;
+  var co=document.createElement('div');
+  co.innerHTML=code;
+  cont.appendChild(co);
+}
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
